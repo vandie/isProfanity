@@ -1,0 +1,28 @@
+{
+  "name": "isprofanity",
+  "version": "1.0.0",
+  "description": "A profanity checker which, unlike alternatives, uses the Wagner–Fischer algorithm in order to catch variations that you haven't thought of. ",
+  "main": "isProfanity.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vandie/isProfanity.git"
+  },
+  "keywords": [
+    "nodejs",
+    "node",
+    "swear",
+    "profanity",
+    "filter",
+    "checker",
+    "module"
+  ],
+  "author": "Michael Van Der Velden",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vandie/isProfanity/issues"
+  },
+  "homepage": "https://github.com/vandie/isProfanity#readme"
+}
