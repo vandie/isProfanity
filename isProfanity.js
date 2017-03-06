@@ -60,7 +60,6 @@ function isProfanity(string,callback,customProfanity,customExceptions){
                 swears.forEach(function(swear) {
                     x = wagnerFischer(swear.toLowerCase(),word.toLowerCase());
                     if(x < (word.length/2) && exceptions.indexOf(word) === -1){
-                        console.log('\''+word+'\' is too close to \''+swear+'\' for comfort');
                         containsASwear = true;
                     }
                 }, this);
