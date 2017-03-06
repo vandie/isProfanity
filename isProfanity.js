@@ -5,7 +5,7 @@ fs = require('fs');
  * @param {function(Array)} callback The function to pass profanity to.
  * @param {String} file (optional) The location of a csv file containing your list of profanity.
  */
-function getProfanity(callback,file){
+function loadCSV(callback,file){
     file = typeof(file) == 'string' ? file : 'data/profanity.csv';
     if(typeof(callback) != 'function') throw new Error('isProfanity Error: Valid callback not given...');
     fs.readFile(file, 'utf8', function (err,data) {
@@ -45,23 +45,28 @@ function wagnerFischer(str1,str2){
  * @param {String} string The string to check for profanity.
  * @param {function(boolian)} callback The function to pass answer to.
  * @param {String} customProfanity (optional) The location of a csv file containing your list of profanity.
+ * @param {String} customExceptions (optional) the location of a csv file containing exceptions that should not be blocked.
  */
 
-function isProfanity(string,callback,customProfanity){
+function isProfanity(string,callback,customProfanity,customExceptions){
+    customExceptions = customExceptions ? customExceptions : 'data/exceptions.csv';
     if(typeof(string) != 'string') throw new Error('isProfanity Error: The var \'string\' is not a String...');
     if(typeof(callback) != 'function') throw new Error('isProfanity Error: Valid callback not given...');
     containsASwear = false;
-    getProfanity(function(swears){
-        strings = string.split(' ');
-        strings.forEach(function(word) {
-            swears.forEach(function(swear) {
-                x = wagnerFischer(swear.toLowerCase(),word.toLowerCase());
-                if(x < (word.length/2)){
-                    containsASwear = true;
-                }
+    loadCSV(function(swears){
+        loadCSV(function(exceptions){
+            strings = string.split(' ');
+            strings.forEach(function(word) {
+                swears.forEach(function(swear) {
+                    x = wagnerFischer(swear.toLowerCase(),word.toLowerCase());
+                    if(x < (word.length/2) && exceptions.indexOf(word) === -1){
+                        console.log('\''+word+'\' is too close to \''+swear+'\' for comfort');
+                        containsASwear = true;
+                    }
+                }, this);
             }, this);
-        }, this);
-        callback(containsASwear);
+            callback(containsASwear);
+        },customExceptions);
     },customProfanity);
 }
 
