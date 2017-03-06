@@ -69,4 +69,4 @@ function isProfanity(string,callback,customProfanity,customExceptions){
     },customProfanity);
 }
 
-exports = isProfanity;
+module.exports = isProfanity;

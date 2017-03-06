@@ -10,7 +10,7 @@ Installation is very simple due to isProfanity being on NPM. Simply type: `npm i
 ##Usage
 There is only one function in isProfanity. Calling it is a simple as typing:
 ```javascript
-isProfanity(s,function(t){
+isprofanity(s,function(t){
     // t will equal true if it contains a swear word and false if not
 });
 ```
@@ -20,7 +20,7 @@ For a full example usage, you can try out the following code, setting 's' as a s
 ```javascript
 var s = "You absolute vanker";//misspelling of 'wanker' which would be allowed by most filters...
 
-isProfanity(s ,function(t){
+isprofanity(s ,function(t){
     b = t ? 'contains' : 'does not contain';
     console.log('"'+s+'" '+b+' profanity');
     process.exit();
@@ -30,7 +30,7 @@ isProfanity(s ,function(t){
 ##Advance Usage
 isProfanity also contains the abilty to pass custom csv files for both profanity and exceptions. You can do this like so:
 ```javascript
-isProfanity(s,function(t){
+isprofanity(s,function(t){
     // t will equal true if it contains a swear word and false if not
 },'data/profanity.csv','data/exceptions.csv');
 ```
