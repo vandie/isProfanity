@@ -6,7 +6,7 @@ fs = require('fs');
  * @param {String} file (optional) The location of a csv file containing your list of profanity.
  */
 function loadCSV(callback,file){
-    file = typeof(file) == 'string' ? file : 'data/profanity.csv';
+    file = typeof(file) == 'string' ? file : __dirname+'/data/profanity.csv';
     if(typeof(callback) != 'function') throw new Error('isProfanity Error: Valid callback not given...');
     fs.readFile(file, 'utf8', function (err,data) {
     if (err) {
@@ -49,7 +49,7 @@ function wagnerFischer(str1,str2){
  */
 
 function isProfanity(string,callback,customProfanity,customExceptions){
-    customExceptions = customExceptions ? customExceptions : 'data/exceptions.csv';
+    customExceptions = customExceptions ? customExceptions : __dirname+'/data/exceptions.csv';
     if(typeof(string) != 'string') throw new Error('isProfanity Error: The var \'string\' is not a String...');
     if(typeof(callback) != 'function') throw new Error('isProfanity Error: Valid callback not given...');
     containsASwear = false;
