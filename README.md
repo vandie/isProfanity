@@ -34,7 +34,7 @@ isprofanity(s,function(t){
     // t will equal true if it contains a swear word and false if not
 },'data/profanity.csv','data/exceptions.csv');
 ```
-While an exceptions file is not needed to replace the profanity list, it is recomended as some words to get flagged that are not swear words. (A notable example in the default set is 'while')
+While an exceptions file is not needed to replace the profanity list, it is recomended as some words do get flagged that are not swear words. (A notable example in the default set is 'while')
 
 ---
 
