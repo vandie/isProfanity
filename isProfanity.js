@@ -53,18 +53,20 @@ function isProfanity(string,callback,customProfanity,customExceptions){
     if(typeof(string) != 'string') throw new Error('isProfanity Error: The var \'string\' is not a String...');
     if(typeof(callback) != 'function') throw new Error('isProfanity Error: Valid callback not given...');
     containsASwear = false;
+    blockedWords =[];
     loadCSV(function(swears){
         loadCSV(function(exceptions){
             strings = string.split(' ');
             strings.forEach(function(word) {
                 swears.forEach(function(swear) {
                     x = wagnerFischer(swear.toLowerCase(),word.toLowerCase());
-                    if(x < (word.length/2) && exceptions.indexOf(word) === -1){
+                    if(x < (word.length/2) && exceptions.indexOf(word.toLowerCase()) === -1){
                         containsASwear = true;
+                        blockedWords.push(word);
                     }
                 }, this);
             }, this);
-            callback(containsASwear);
+            callback(containsASwear,blockedWords);
         },customExceptions);
     },customProfanity);
 }

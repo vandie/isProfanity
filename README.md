@@ -28,6 +28,7 @@ isprofanity(s ,function(t){
 ```
 
 ##Advance Usage
+###Setting custom lists
 isProfanity also contains the abilty to pass custom csv files for both profanity and exceptions. You can do this like so:
 ```javascript
 isprofanity(s,function(t){
@@ -35,6 +36,17 @@ isprofanity(s,function(t){
 },'data/profanity.csv','data/exceptions.csv');
 ```
 While an exceptions file is not needed to replace the profanity list, it is recomended as some words do get flagged that are not swear words. (A notable example in the default set is 'while')
+
+###Get an array of the words that were blocked
+I added this to help find exceptions although it could be useful in other cases too. to get this simply use the following:
+```javascript
+isprofanity(s,function(t,blocked){
+    // t will equal true if it contains potential profanity and false if not
+    // blocked will be an array of the blocked words.
+},'data/profanity.csv','data/exceptions.csv');
+```
+If you find any false positives, please share them.
+
 
 ---
 
