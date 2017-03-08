@@ -60,7 +60,7 @@ function isProfanity(string,callback,customProfanity,customExceptions){
             strings.forEach(function(word) {
                 swears.forEach(function(swear) {
                     x = wagnerFischer(swear.toLowerCase(),word.toLowerCase());
-                    if(x < (swear.length-2) && exceptions.indexOf(word.toLowerCase()) === -1){
+                    if(x < (swear.length/2) && exceptions.indexOf(word.toLowerCase()) === -1){
                         containsASwear = true;
                         blockedWords.push(word);
                     }
