@@ -38,7 +38,7 @@ isprofanity(s,function(t){
 While an exceptions file is not needed to replace the profanity list, it is recomended as some words do get flagged that are not swear words. (A notable example in the default set is 'while')
 
 ###Get an array of the words that were blocked
-I added this to help find exceptions although it could be useful in other cases too. to get this simply use the following:
+I added this to help find exceptions although it could be useful in other cases too. In order to get this array, simply use the following:
 ```javascript
 isprofanity(s,function(t,blocked){
     // t will equal true if it contains potential profanity and false if not
