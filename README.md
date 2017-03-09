@@ -42,8 +42,8 @@ I added this to help find exceptions although it could be useful in other cases 
 ```javascript
 isprofanity(s,function(t,blocked){
     // t will equal true if it contains potential profanity and false if not
-    // blocked will be an array of the blocked words.
-},'data/profanity.csv','data/exceptions.csv');
+    // blocked will be an array of the blocked words, how sure it is about them and what word they are closest to.
+});
 ```
 If you find any false positives, please share them.
 

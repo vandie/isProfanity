@@ -16,7 +16,18 @@ function loadCSV(callback,file){
     }
     });
 }
-
+/**
+ * Stores a word and it's current rating
+ * @class
+ * @param {String} word The word as a string
+ * @param {Number} rating The Levenshtein distance provided by wangerFischer
+ * @param {String} closeWord The word tested against
+ */
+function Word(word,rating,closeWord){
+    this.word = String(word) || '';
+    this.sureness = 1 - Number(rating)/this.word.length || 0;
+    this.closestTo = String(closeWord)
+}
 /**
  * Perform the Wagner-Fischer algorithm on the 2 inputs
  * ( https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm )
@@ -52,19 +63,30 @@ function isProfanity(string,callback,customProfanity,customExceptions){
     customExceptions = customExceptions ? customExceptions : __dirname+'/data/exceptions.csv';
     if(typeof(string) != 'string') throw new Error('isProfanity Error: The var \'string\' is not a String...');
     if(typeof(callback) != 'function') throw new Error('isProfanity Error: Valid callback not given...');
-    containsASwear = false;
-    blockedWords =[];
+    var containsASwear = false;
+    var blockedWords = new Array();
     loadCSV(function(swears){
         loadCSV(function(exceptions){
             strings = string.split(' ');
             strings.forEach(function(word) {
+                WorstSwear = new Word();
+                mostlikelyexception = new Word();
                 swears.forEach(function(swear) {
                     x = wagnerFischer(swear.toLowerCase(),word.toLowerCase());
-                    if(x < Math.floor(word.length/2) && exceptions.indexOf(word.toLowerCase()) === -1){
-                        containsASwear = true;
-                        blockedWords.push(word);
+                    if(new Word(word,x).sureness > WorstSwear.sureness){
+                        WorstSwear = new Word(word,x,swear);
                     }
                 }, this);
+                exceptions.forEach(function(exep) {
+                    x = wagnerFischer(exep.toLowerCase(),word.toLowerCase());
+                    if(new Word(word,x).sureness > mostlikelyexception.sureness){
+                        mostlikelyexception = new Word(word,x,exep);
+                    }
+                }, this);
+                if(WorstSwear.sureness > mostlikelyexception.sureness && WorstSwear.sureness > 0.2){
+                    blockedWords.push(WorstSwear);
+                    containsASwear = true;
+                }
             }, this);
             callback(containsASwear,blockedWords);
         },customExceptions);
