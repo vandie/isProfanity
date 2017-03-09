@@ -83,7 +83,7 @@ function isProfanity(string,callback,customProfanity,customExceptions){
                         mostlikelyexception = new Word(word,x,exep);
                     }
                 }, this);
-                if(WorstSwear.sureness > mostlikelyexception.sureness && WorstSwear.sureness > 0.2){
+                if(WorstSwear.sureness > mostlikelyexception.sureness && WorstSwear.sureness > 0.42){
                     blockedWords.push(WorstSwear);
                     containsASwear = true;
                 }
