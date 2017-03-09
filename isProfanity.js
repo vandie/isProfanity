@@ -1,4 +1,6 @@
 fs = require('fs');
+async = require('async');
+
 /**
  * Gets the list of profanity words from the csv file
  * @function
@@ -68,27 +70,33 @@ function isProfanity(string,callback,customProfanity,customExceptions){
     loadCSV(function(swears){
         loadCSV(function(exceptions){
             strings = string.split(' ');
-            strings.forEach(function(word) {
-                WorstSwear = new Word();
-                mostlikelyexception = new Word();
-                swears.forEach(function(swear) {
+            async.each(strings,function(word,callback) {
+                var WorstSwear = new Word();
+                var mostlikelyexception = new Word();
+                async.each(swears,function(swear,callback){
                     x = wagnerFischer(swear.toLowerCase(),word.toLowerCase());
                     if(new Word(word,x).sureness > WorstSwear.sureness){
                         WorstSwear = new Word(word,x,swear);
                     }
-                }, this);
-                exceptions.forEach(function(exep) {
-                    x = wagnerFischer(exep.toLowerCase(),word.toLowerCase());
-                    if(new Word(word,x).sureness > mostlikelyexception.sureness){
-                        mostlikelyexception = new Word(word,x,exep);
-                    }
-                }, this);
-                if(WorstSwear.sureness > mostlikelyexception.sureness && WorstSwear.sureness > 0.42){
-                    blockedWords.push(WorstSwear);
-                    containsASwear = true;
-                }
-            }, this);
-            callback(containsASwear,blockedWords);
+                    callback();
+                }, function(err) {
+                    async.each(exceptions,function(exep,callback){
+                        x = wagnerFischer(exep.toLowerCase(),word.toLowerCase());
+                        if(new Word(word,x).sureness > mostlikelyexception.sureness){
+                            mostlikelyexception = new Word(word,x,exep);
+                        }
+                        callback();
+                    }, function(err) {
+                        if(WorstSwear.sureness > mostlikelyexception.sureness && WorstSwear.sureness > 0.42){
+                            blockedWords.push(WorstSwear);
+                            containsASwear = true;
+                        }
+                    });
+                });
+                callback();
+            }, function(err){
+                callback(containsASwear,blockedWords);
+            });
         },customExceptions);
     },customProfanity);
 }
