@@ -1,6 +1,6 @@
 {
   "name": "isprofanity",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "A profanity checker which, unlike alternatives, uses the Wagner–Fischer algorithm in order to catch variations that you haven't thought of. ",
   "main": "isProfanity.js",
   "scripts": {
