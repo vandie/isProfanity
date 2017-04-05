@@ -73,6 +73,7 @@ function isProfanity(string,callback,customProfanity,customExceptions){
             async.each(strings,function(word,callback) {
                 var WorstSwear = new Word();
                 var mostlikelyexception = new Word();
+                var foundExeption = exceptions.includes(word.toLowerCase());
                 async.each(swears,function(swear,callback){
                     x = wagnerFischer(swear.toLowerCase(),word.toLowerCase());
                     if(new Word(word,x).sureness > WorstSwear.sureness){
@@ -80,18 +81,10 @@ function isProfanity(string,callback,customProfanity,customExceptions){
                     }
                     callback();
                 }, function(err) {
-                    async.each(exceptions,function(exep,callback){
-                        x = wagnerFischer(exep.toLowerCase(),word.toLowerCase());
-                        if(new Word(word,x).sureness > mostlikelyexception.sureness){
-                            mostlikelyexception = new Word(word,x,exep);
-                        }
-                        callback();
-                    }, function(err) {
-                        if(WorstSwear.sureness > mostlikelyexception.sureness && WorstSwear.sureness > 0.42){
-                            blockedWords.push(WorstSwear);
-                            containsASwear = true;
-                        }
-                    });
+                    if(!foundExeption && WorstSwear.sureness > 0.42){
+                        blockedWords.push(WorstSwear);
+                        containsASwear = true;
+                    }
                 });
                 callback();
             }, function(err){
