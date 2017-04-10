@@ -1,5 +1,5 @@
 var isprofanity = require('./isProfanity.js');
-var ta =['gobshite'];
+var ta =['Hello my friend! Thanks! for the help.'];
 
 ta.forEach(function(tstring) {
     isprofanity(tstring,function(t,a){
