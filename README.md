@@ -1,8 +1,9 @@
 # isProfanity
-A profanity checker which, unlike alternatives, uses the Wagner–Fischer algorithm in order to catch variations that you haven't thought of. 
+A profanity checker which, unlike alternatives, uses the Wagner–Fischer algorithm in order to catch variations that you haven't thought of. If you use it in a project, please do tweet using the hashtag #isProfanity and I'll be sure to check it out.
 
 [![npm](https://img.shields.io/npm/v/isprofanity.svg?style=flat-square)](https://www.npmjs.com/package/isprofanity)
 [![npm](https://img.shields.io/npm/dt/isprofanity.svg?style=flat-square)](https://www.npmjs.com/package/isprofanity)
+
 
 ## Installation
 Installation is very simple due to isProfanity being on NPM. Simply type: `npm install isprofanity` from a console in the project directory then add ` var isprofanity = require('isprofanity');` to the top of your project file.
