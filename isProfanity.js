@@ -71,7 +71,7 @@ function isProfanity(string,callback,customProfanity,customExceptions){
         loadCSV(function(exceptions){
             strings = string.split(' ');
             async.each(strings,function(word,callback) {
-                word = word.replace(/\b[-.,()&$#!\[\]{}"']+\B|\B[-.,()&$#!\[\]{}"']+\b/g, "");
+                word = word.replace(/\b[-.,()&$#:!\[\]{}"']+\B|\B[-.,()&$#:!\[\]{}"']+\b/g, "");
                 var WorstSwear = new Word();
                 var mostlikelyexception = new Word();
                 var foundExeption = exceptions.includes(word.toLowerCase());
