@@ -82,7 +82,7 @@ function isProfanity(string,callback,customProfanity,customExceptions){
                     }
                     callback();
                 }, function(err) {
-                    if(!foundExeption && WorstSwear.sureness > 0.42){
+                    if(!foundExeption && WorstSwear.sureness > 0.32){
                         blockedWords.push(WorstSwear);
                         containsASwear = true;
                     }
