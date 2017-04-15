@@ -4,11 +4,12 @@ A profanity checker which, unlike alternatives, uses the Wagner–Fischer algori
 [![npm](https://img.shields.io/npm/v/isprofanity.svg?style=flat-square)](https://www.npmjs.com/package/isprofanity)
 [![npm](https://img.shields.io/npm/dt/isprofanity.svg?style=flat-square)](https://www.npmjs.com/package/isprofanity)
 
-
 ## Installation
+
 Installation is very simple due to isProfanity being on NPM. Simply type: `npm install isprofanity` from a console in the project directory then add ` var isprofanity = require('isprofanity');` to the top of your project file.
 
-##Usage
+## Usage
+
 There is only one function in isProfanity. Calling it is a simple as typing:
 ```javascript
 isprofanity(s,function(t){
@@ -28,17 +29,35 @@ isprofanity(s ,function(t){
 });
 ```
 
-##Advance Usage
-###Setting custom lists
-isProfanity also contains the abilty to pass custom csv files for both profanity and exceptions. You can do this like so:
+## Advance Usage
+
+### Setting custom lists
+
+IsProfanity also contains the abilty to pass custom csv files for both profanity and exceptions. You can do this like so:
 ```javascript
 isprofanity(s,function(t){
     // t will equal true if it contains a swear word and false if not
 },'data/profanity.csv','data/exceptions.csv');
 ```
-While an exceptions file is not needed to replace the profanity list, it is recomended as some words do get flagged that are not swear words. (A notable example in the default set is 'while')
+While an exceptions file is not needed to replace the profanity list, it is recomended as some words do get flagged that are not swear words. (A notable example in the default set is 'while'). 
 
-###Get an array of the words that were blocked
+Key note: Unfortunately, this cannot be done while running in browser mode due to the fact that the browser does not support `fs`.
+
+### Change Sensitivity
+
+IsProfanity does allow the changing of its sensitivity as of version 1.4.0. Changing the sensitivity will require you to use a custom exception list if using a setting higher than `0.67` ( the default) and as such **you can only use the default or decrease the sensitivity while not running in browser mode**. To change the sensitivity, try the following:
+
+```javascript
+var customSensitivity = 0.5;
+isprofanity(s,function(t){
+  	// t will equal true if it contains a swear word and false if not using your custom sensitivity
+},'data/profanity.csv','data/exceptions.csv',customSensitivity);
+```
+
+**Warning: Using a custom sensitivity setting may allow more words through. For example, a sensitivity of `0.5` will still block** `f**k` **but will no longer block** `f***`.
+
+### Get an array of the words that were blocked
+
 I added this to help find exceptions although it could be useful in other cases too. In order to get this array, simply use the following:
 ```javascript
 isprofanity(s,function(t,blocked){
@@ -47,7 +66,6 @@ isprofanity(s,function(t,blocked){
 });
 ```
 If you find any false positives, please share them.
-
 
 ---
 

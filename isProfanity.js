@@ -1,5 +1,9 @@
-fs = require('fs');
 async = require('async');
+try {
+    var fs = require('fs')
+}catch(e){
+    var fs = false;
+}
 
 /**
  * Gets the list of profanity words from the csv file
@@ -9,14 +13,24 @@ async = require('async');
  */
 function loadCSV(callback,file){
     file = typeof(file) == 'string' ? file : __dirname+'/data/profanity.csv';
-    if(typeof(callback) != 'function') throw new Error('isProfanity Error: Valid callback not given...');
-    fs.readFile(file, 'utf8', function (err,data) {
-    if (err) {
-        throw err;
-    }else{
-        callback(data.split(','));
+    if(fs){
+        if(typeof(callback) != 'function') throw new Error('isProfanity Error: Valid callback not given...');
+        fs.readFile(file, 'utf8', function (err,data) {
+            if (err) {
+                throw err;
+            }else{
+                callback(data.split(','));
+            }
+        });
+    }else{//browser version
+        if(file.includes('exceptions')){
+            e = require(__dirname+'/data/exceptions.js');
+            callback(e.t.split(','));
+        }else{
+            e = require(__dirname+'/data/profanity.js');
+            callback(e.t.split(','));
+        }
     }
-    });
 }
 /**
  * Stores a word and it's current rating
@@ -59,10 +73,13 @@ function wagnerFischer(str1,str2){
  * @param {function(boolian)} callback The function to pass answer to.
  * @param {String} customProfanity (optional) The location of a csv file containing your list of profanity.
  * @param {String} customExceptions (optional) the location of a csv file containing exceptions that should not be blocked.
+ * @param {float} sensitivity (optional) (requires custom exceptions list) How sensitive to be to changes. Must be between 0 and 1 (defaults to 0.67)
  */
 
-function isProfanity(string,callback,customProfanity,customExceptions){
-    customExceptions = customExceptions ? customExceptions : __dirname+'/data/exceptions.csv';
+function isProfanity(string,callback,customProfanity,customExceptions,sensitivity){
+    var minSure = sensitivity && sensitivity >= 0 && sensitivity <= 1 ? 1-sensitivity : 0.32;
+    minSure = minSure < 0.32 ? customExceptions ? minSure : 0.32 : minSure;
+    customExceptions = customExceptions && fs ? customExceptions : __dirname+'/data/exceptions.csv';
     if(typeof(string) != 'string') throw new Error('isProfanity Error: The var \'string\' is not a String...');
     if(typeof(callback) != 'function') throw new Error('isProfanity Error: Valid callback not given...');
     var containsASwear = false;
@@ -82,7 +99,7 @@ function isProfanity(string,callback,customProfanity,customExceptions){
                     }
                     callback();
                 }, function(err) {
-                    if(!foundExeption && WorstSwear.sureness > 0.32){
+                    if(!foundExeption && WorstSwear.sureness > minSure){
                         blockedWords.push(WorstSwear);
                         containsASwear = true;
                     }
