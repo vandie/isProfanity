@@ -70,7 +70,7 @@ function wagnerFischer(str1,str2){
  * Passes a boolian to a callback saying whether a string contains profanity or not.
  * @function
  * @param {String} string The string to check for profanity.
- * @param {function(boolian)} callback The function to pass answer to.
+ * @param {function(boolean)} callback The function to pass answer to.
  * @param {String} customProfanity (optional) The location of a csv file containing your list of profanity.
  * @param {String} customExceptions (optional) the location of a csv file containing exceptions that should not be blocked.
  * @param {float} sensitivity (optional) (requires custom exceptions list) How sensitive to be to changes. Must be between 0 and 1 (defaults to 0.67)
