@@ -1,4 +1,4 @@
-# isProfanity
+# isProfanity (not maintained)
 A profanity checker which, unlike alternatives, uses the Wagner–Fischer algorithm in order to catch variations that you haven't thought of. If you use it in a project, please do tweet using the hashtag #isProfanity and I'll be sure to check it out.
 
 [![npm](https://img.shields.io/npm/v/isprofanity.svg?style=flat-square)](https://www.npmjs.com/package/isprofanity)
@@ -77,5 +77,7 @@ Follow me on twitter ([@MVD_Vandie](https://twitter.com/MVD_Vandie)) or on githu
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/mvd_vandie.svg?label=Follow%20on%20Twitter&style=flat-square)](https://twitter.com/MVD_Vandie) 
 [![GitHub followers](https://img.shields.io/github/followers/vandie.svg?label=Follow%20on%20Github&style=flat-square)](https://github.com/vandie)
+
+Support me via Brave : https://brave.com/van441
 
 Enjoy. :D
